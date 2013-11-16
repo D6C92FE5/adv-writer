@@ -1,0 +1,91 @@
+
+doctype 5
+html
+  head
+    meta(charset="utf-8")
+    title 文字冒险游戏脚本写作工具
+    meta(name="viewport", content="width=device-width, initial-scale=1.0, user-scalable=no")
+
+    mixin css(href)
+      link(rel="stylesheet", href=href)
+    +css("assets/bootstrap/css/bootstrap.css")
+    +css("assets/Select2/select2.css")
+    +css("assets/bootstrap-switch/stylesheets/bootstrap-switch.css")
+    +css("index.css")
+
+  body
+    mixin link-button
+      a(class=attributes.class, id=attributes.id, href="javascript:;")
+        block
+    mixin icon-link-button(icon)
+      +link-button(class=attributes.class, id=attributes.id)
+        span.glyphicon(class="glyphicon-" + icon)
+        block
+
+    .navbar.navbar-inverse.navbar-fixed-top
+      .collapse.navbar-collapse
+        ul.nav.navbar-nav
+          li: +icon-link-button("floppy-disk")#save 保存
+          li: +icon-link-button("download-alt")#download 下载
+          li: +icon-link-button("open")#openfile 打开
+        ul.nav.navbar-nav.add-line
+          li: +icon-link-button("plus") 对白
+          li: +icon-link-button("plus") 背景图
+          li: +icon-link-button("plus") 可鉴赏的背景图
+          li: +icon-link-button("plus") 背景音乐
+          li: +icon-link-button("plus") 音效
+          li: +icon-link-button("plus") 时间标记
+        ul.nav.navbar-nav.navbar-right
+          li: +link-button 共 <span id="line-count">?</span> 条目
+          li: +icon-link-button("floppy-remove")#clear 清空
+
+    #lines
+      // {{#.}}
+      .input-group.input-group-sm
+        span.input-group-btn
+          // {{#if character}}
+          button.btn.btn-default.type(type="button", data-type="{{type}}")
+            span test
+            | {{character}}
+          // {{else}}
+          button.btn.btn-default.type(class="btn-{{line-style type}}", type="button") {{type}}
+          // {{/if}}
+        input.form-control(type="text", value="{{value}}")
+        //.make
+        .input-group-btn
+          button.btn.btn-primary.dropdown-toggle(type="button", data-toggle="dropdown")
+            span 操作
+            span.caret
+          ul.dropdown-menu.pull-right
+            li: +link-button.moveUp 上移
+            li: +link-button.moveDown 下移
+            li.divider
+            li: +link-button.delete 删除
+      // {{/.}}
+
+    #selector.modal.fade(tabindex="-1")
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type="button", data-dismiss="modal") &times;
+            h4.modal-title 选择或创建
+              span#selector-type
+          .modal-body
+            input#selector-select(type="text")
+            #selector-gallery.make-switch.switch-large.hide(data-on-label="可", data-off-label="不可", data-text-label="CG鉴赏")
+              input(type="checkbox")
+          .modal-footer
+            button.btn.btn-default(type="button", data-dismiss="modal") 取消
+            button#selector-submit.btn.btn-primary(type="button") 确定
+
+    a#downloader.hide
+    input#uploader.hide(type="file", accept=".json")
+
+  script(src="assets/jquery/jquery-1.10.2.js")
+  script(src="assets/underscore.js/underscore.js")
+  script(src="assets/handlebars.js/handlebars-v1.1.2.js")
+  script(src="assets/bootstrap/js/bootstrap.js")
+  script(src="assets/select2/select2.js")
+  script(src="assets/moment.js/moment.min.js")
+  script(src="assets/bootstrap-switch/js/bootstrap-switch.js")
+  script(src="index.js")
