@@ -44,7 +44,6 @@
 
   $('#selector').on('hidden.bs.modal', ->
     $('#selector-select').select2('destroy').val('')
-    $('#selector-gallery').addClass('hide').bootstrapSwitch('setState', false)
   )
 
   popupSelector = ->
@@ -57,7 +56,6 @@
       tags: values[type] || []
       maximumSelectionSize: 1
       tokenSeparators: []
-    $('#selector-gallery').removeClass('hide') if type == '背景图'
     $('#selector').prop('target', $(this).parents('.input-group')).modal()
 
   deltaLineCount = (n = 1) ->
@@ -69,7 +67,7 @@
     type = $('#selector-type').text()
     type = '对白' if type == '角色'
     value = $('#selector-select').val()
-    values[type] = _.union([value], values[type])
+    values[type] = _.union([value], values[type] || [])
     source =
       if type == '对白'
         type: type
@@ -78,8 +76,6 @@
       else
         type: type
         value: value
-    if type == '背景图'
-      source.gallery = $('#selector-gallery').bootstrapSwitch('status')
     $rendered = $(template([source]))
     bindLinesEvent($rendered)
     if ($target.length > 0)

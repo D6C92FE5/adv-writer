@@ -44,9 +44,7 @@ html
       .input-group.input-group-sm
         span.input-group-btn
           // {{#if character}}
-          button.btn.btn-default.type(type="button", data-type="{{type}}")
-            span test
-            | {{character}}
+          button.btn.btn-default.type(type="button", data-type="{{type}}") {{character}}
           // {{else}}
           button.btn.btn-default.type(class="btn-{{line-style type}}", type="button") {{type}}
           // {{/if}}
@@ -72,8 +70,6 @@ html
               span#selector-type
           .modal-body
             input#selector-select(type="text")
-            #selector-gallery.make-switch.switch-large.hide(data-on-label="可", data-off-label="不可", data-text-label="CG鉴赏")
-              input(type="checkbox")
           .modal-footer
             button.btn.btn-default(type="button", data-dismiss="modal") 取消
             button#selector-submit.btn.btn-primary(type="button") 确定
