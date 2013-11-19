@@ -16,8 +16,11 @@
 
 
   template = Handlebars.compile($('#lines').html())
+
   lines = []
   values = []
+
+  $clipboard = null
 
   loadData = ->
     lines = JSON.parse(localStorage.getItem('lines')) || []
@@ -93,6 +96,13 @@
     $field.find('.moveDown').click ->
       $container = $(this).parents('.input-group')
       $container.next().after($container)
+    $field.find('.cut').click ->
+      $clipboard = $(this).parents('.input-group')
+      $clipboard.detach()
+    $field.find('.paste').click ->
+      if $clipboard?
+        $(this).parents('.input-group').after($clipboard)
+        $clipboard = null
     $field.find('.delete').click ->
       $(this).parents('.input-group').remove()
       deltaLineCount(-1)
